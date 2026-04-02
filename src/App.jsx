@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'; 
+import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { findMinimalSubset } from './utils/subsetCalculator';
 import {
@@ -43,8 +43,8 @@ function App() {
     }
   }, [bills, monthlyBudget, dispatch]);
 
-  const totalSpent = useMemo(() => 
-    bills.reduce((sum, bill) => sum + Number(bill.amount), 0), 
+  const totalSpent = useMemo(() =>
+    bills.reduce((sum, bill) => sum + Number(bill.amount), 0),
     [bills]
   );
 
@@ -55,59 +55,76 @@ function App() {
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <span style={{ fontSize: '1.75rem' }}>💳</span> 
+          <span style={{ fontSize: '1.75rem' }}>💳</span>
           <span>BillManager</span>
         </div>
-        
-        <div style={{ padding: '0.5rem 1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', marginBottom: '2rem' }}>
+
+        <div style={{ padding: '0.875rem 1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '16px', marginBottom: '2.5rem' }}>
           <div style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Current Role</div>
-          <div style={{ color: isAdmin ? 'var(--success)' : 'var(--warning)', fontWeight: 700, fontSize: '0.9rem' }}>
-             {user.role}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ color: isAdmin ? 'var(--success)' : 'var(--warning)', fontWeight: 700, fontSize: '1rem' }}>
+               {user.role}
+            </div>
+            <button 
+              onClick={() => dispatch(toggleRole())}
+              style={{ 
+                background: 'rgba(255,255,255,0.1)', 
+                border: 'none', 
+                color: 'white', 
+                fontSize: '0.75rem', 
+                padding: '0.35rem 0.65rem', 
+                borderRadius: '8px', 
+                cursor: 'pointer',
+                fontWeight: 600
+              }}
+            >
+              🔄 Change
+            </button>
           </div>
         </div>
 
-        <nav className="sidebar-nav" style={{ flex: 1 }}>
+        <nav className="sidebar-nav" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
           <a href="#" className="nav-item active">Dashboard</a>
           <a href="#" className="nav-item">Bills History</a>
           <a href="#" className="nav-item">Analytics</a>
-          
-          <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.1)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-             <button 
-              onClick={() => dispatch(toggleRole())}
-              className="nav-item"
-              style={{ background: 'rgba(255,255,255,0.05)', border: 'none', width: '100%', textAlign: 'left' }}
-            >
-              <span style={{ marginRight: '0.75rem' }}>🔄</span>
-              Switch to {isAdmin ? 'Viewer' : 'Admin'}
-            </button>
-
-             <button 
-              onClick={() => setDarkMode(!darkMode)}
-              className="nav-item"
-              style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left' }}
-            >
-              <span style={{ marginRight: '0.75rem' }}>{darkMode ? '☀️' : '🌙'}</span>
-              {darkMode ? 'Light Mode' : 'Dark Mode'}
-            </button>
-          </div>
         </nav>
       </aside>
 
 
       {/* Main Content */}
       <main className="main-content">
-        <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+        <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '1rem' }}>
           <div>
             <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>Overview</h1>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <div style={{ textAlign: 'right' }}>
+            <button 
+              onClick={() => setDarkMode(!darkMode)}
+              style={{ 
+                background: 'var(--bg-card)', 
+                border: '1px solid var(--border)', 
+                padding: '0.6rem', 
+                borderRadius: '12px', 
+                cursor: 'pointer',
+                fontSize: '1.25rem',
+                boxShadow: 'var(--shadow)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.2s'
+              }}
+              title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {darkMode ? '☀️' : '🌙'}
+            </button>
+            <div style={{ textAlign: 'right', display: 'none', md: 'block' }}>
               <div style={{ fontSize: '0.9rem', color: 'var(--text-main)', fontWeight: 700 }}>{user.name}</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{user.role} Account</div>
             </div>
             <div style={{ width: '45px', height: '45px', background: 'var(--primary)', borderRadius: '12px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '1.1rem', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)' }}>{user.initials}</div>
           </div>
         </header>
+
 
         {/* Stats Grid */}
         <section className="stats-grid">
@@ -164,7 +181,7 @@ function App() {
 
         {/* Bottom Row Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '2rem' }}>
-           {/* Highlighted Bills (Subset) */}
+          {/* Highlighted Bills (Subset) */}
           <section className="card">
             <h2 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 700 }}>Payment Recommendations</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
@@ -174,10 +191,10 @@ function App() {
               {bills
                 .filter((bill) => highlightedBills.includes(bill.id))
                 .map((bill) => (
-                  <div key={bill.id} style={{ 
-                    padding: '1rem', 
-                    background: '#f8fafc', 
-                    border: '1px solid var(--border)', 
+                  <div key={bill.id} style={{
+                    padding: '1rem',
+                    background: '#f8fafc',
+                    border: '1px solid var(--border)',
                     borderRadius: '1rem',
                     display: 'flex',
                     alignItems: 'center',
