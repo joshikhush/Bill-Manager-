@@ -163,7 +163,48 @@ function App() {
           </div>
         </section>
 
+        {/* Insights Section */}
+        <section style={{ marginBottom: '2.5rem' }}>
+          <div className="card" style={{ padding: '1.5rem', border: '1px solid var(--border)', background: 'var(--bg-card)' }}>
+            <h2 style={{ fontSize: '1rem', margin: '0 0 1.25rem 0', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span style={{ fontSize: '1.25rem' }}>💡</span> Quick Insights & Observations
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+              <div style={{ padding: '1.25rem', background: 'var(--bg-main)', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Top Spending Category</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>
+                  {bills.length > 0 ? (
+                    (() => {
+                      const totals = bills.reduce((acc, b) => {
+                        acc[b.category] = (acc[b.category] || 0) + b.amount;
+                        return acc;
+                      }, {});
+                      const top = Object.entries(totals).sort((a,b) => b[1] - a[1])[0];
+                      return `${top[0]} (₹${top[1].toLocaleString()})`;
+                    })()
+                  ) : 'No data'}
+                </div>
+              </div>
+              <div style={{ padding: '1.25rem', background: 'var(--bg-main)', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Budget Health</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: totalSpent > monthlyBudget ? 'var(--danger)' : 'var(--success)' }}>
+                  {((totalSpent / monthlyBudget) * 100).toFixed(1)}% Used
+                </div>
+              </div>
+              <div style={{ padding: '1.25rem', background: 'var(--bg-main)', borderRadius: '12px' }}>
+                <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Summary & Observation</div>
+                <div style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-main)', lineHeight: 1.4 }}>
+                  {totalSpent > monthlyBudget 
+                    ? `Warning: Your expenses are ₹${(totalSpent - monthlyBudget).toLocaleString()} over your planned budget.`
+                    : `Great job! You have ₹${remainingBudget.toLocaleString()} left to spend this month.`}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section style={{ display: 'grid', gridTemplateColumns: isAdmin ? 'minmax(0, 2fr) 350px' : '1fr', gap: '2rem', marginBottom: '2rem' }}>
+
           {/* Bills List Card */}
           <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
             <BillsList />
