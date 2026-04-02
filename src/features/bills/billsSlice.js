@@ -6,21 +6,21 @@ const initialState = {
     {
       id: 1,
       description: 'Dominoes',
-      category: 'FoodNDining',
+      category: 'Food & Dining',
       amount: 430,
       date: '2020-01-02',
     },
     {
       id: 2,
       description: 'Car wash',
-      category: 'utility',
+      category: 'Utility',
       amount: 500,
       date: '2020-01-06',
     },
     {
       id: 3,
       description: 'Amazon',
-      category: 'shopping',
+      category: 'Shopping',
       amount: 2030,
       date: '2020-01-07',
     },
@@ -54,8 +54,10 @@ const initialState = {
     },
   ],
   filterCategory: 'all',
+  searchQuery: '',
   highlightedBills: [],
 };
+
 
 const billsSlice = createSlice({
   name: 'bills',
@@ -85,8 +87,10 @@ const billsSlice = createSlice({
     setFilterCategory: (state, action) => {
       state.filterCategory = action.payload;
     },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
+    },
     setHighlightedBills: (state, action) => {
-      // payload = array of bill IDs
       state.highlightedBills = action.payload;
     },
     setMonthlyBudget: (state, action) => {
@@ -100,8 +104,10 @@ export const {
   editBill,
   removeBill,
   setFilterCategory,
+  setSearchQuery,
   setHighlightedBills,
   setMonthlyBudget,
 } = billsSlice.actions;
 
 export default billsSlice.reducer;
+
