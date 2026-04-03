@@ -51,13 +51,13 @@ function App() {
   const remainingBudget = monthlyBudget - totalSpent;
 
   return (
-    <div className={`dashboard-container ${darkMode ? 'dark-mode' : ''}`} style={{ width: '100vw' }}>
+    <div className={`dashboard-container ${darkMode ? 'dark-mode' : ''}`}>
       {/* Sidebar */}
       <aside className="sidebar">
         <div className="sidebar-logo">
-          <span style={{ fontSize: '1.75rem' }}>💳</span>
           <span>BillManager</span>
         </div>
+
 
         <div style={{ padding: '0.875rem 1rem', background: 'rgba(255,255,255,0.05)', borderRadius: '16px', marginBottom: '2.5rem' }}>
           <div style={{ fontSize: '0.7rem', color: '#94a3b8', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Current Role</div>
@@ -128,7 +128,7 @@ function App() {
 
         {/* Stats Grid */}
         <section className="stats-grid">
-          <div className="card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <div className="card">
             <div>
               <div className="card-title">Monthly Budget</div>
               <div className="card-value primary">₹{monthlyBudget.toLocaleString()}</div>
@@ -140,28 +140,34 @@ function App() {
                   value={monthlyBudget}
                   onChange={(e) => dispatch(setMonthlyBudget(Number(e.target.value)))}
                   className="form-input"
+                  style={{ height: '36px', padding: '0.5rem' }}
                   placeholder="Set Budget..."
                 />
               </div>
             )}
           </div>
           <div className="card">
-            <div className="card-title">Total Expenses</div>
-            <div className="card-value danger">₹{totalSpent.toLocaleString()}</div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.75rem', fontWeight: 500 }}>
-              <span style={{ color: 'var(--danger)', fontWeight: 700 }}>{bills.length}</span> active bills this month
+            <div>
+              <div className="card-title">Total Expenses</div>
+              <div className="card-value danger">₹{totalSpent.toLocaleString()}</div>
+            </div>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.75rem', fontWeight: 500, height: '36px', display: 'flex', alignItems: 'center' }}>
+              <span><span style={{ color: 'var(--danger)', fontWeight: 700 }}>{bills.length}</span> active bills</span>
             </div>
           </div>
           <div className="card">
-            <div className="card-title">Remaining Budget</div>
-            <div className={`card-value ${remainingBudget >= 0 ? 'success' : 'danger'}`}>
-              ₹{remainingBudget.toLocaleString()}
+            <div>
+              <div className="card-title">Remaining Budget</div>
+              <div className={`card-value ${remainingBudget >= 0 ? 'success' : 'danger'}`}>
+                ₹{remainingBudget.toLocaleString()}
+              </div>
             </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.75rem', fontWeight: 500 }}>
+            <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.75rem', fontWeight: 500, height: '36px', display: 'flex', alignItems: 'center' }}>
               {remainingBudget >= 0 ? '✓ Within budget' : '⚠ Budget exceeded!'}
             </div>
           </div>
         </section>
+
 
         {/* Insights Section */}
         <section style={{ marginBottom: '2.5rem' }}>
@@ -170,7 +176,7 @@ function App() {
               <span style={{ fontSize: '1.25rem' }}>💡</span> Quick Insights & Observations
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
-              <div style={{ padding: '1.25rem', background: 'var(--bg-main)', borderRadius: '12px' }}>
+              <div style={{ padding: '1.25rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px' }}>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Top Spending Category</div>
                 <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--primary)' }}>
                   {bills.length > 0 ? (
@@ -185,13 +191,13 @@ function App() {
                   ) : 'No data'}
                 </div>
               </div>
-              <div style={{ padding: '1.25rem', background: 'var(--bg-main)', borderRadius: '12px' }}>
+              <div style={{ padding: '1.25rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px' }}>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Budget Health</div>
                 <div style={{ fontSize: '1.1rem', fontWeight: 700, color: totalSpent > monthlyBudget ? 'var(--danger)' : 'var(--success)' }}>
                   {((totalSpent / monthlyBudget) * 100).toFixed(1)}% Used
                 </div>
               </div>
-              <div style={{ padding: '1.25rem', background: 'var(--bg-main)', borderRadius: '12px' }}>
+              <div style={{ padding: '1.25rem', background: 'rgba(79, 70, 229, 0.05)', borderRadius: '12px' }}>
                 <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>Summary & Observation</div>
                 <div style={{ fontSize: '0.875rem', fontWeight: 500, color: 'var(--text-main)', lineHeight: 1.4 }}>
                   {totalSpent > monthlyBudget 
@@ -234,7 +240,7 @@ function App() {
                 .map((bill) => (
                   <div key={bill.id} style={{
                     padding: '1rem',
-                    background: '#f8fafc',
+                    background: 'var(--bg-main)',
                     border: '1px solid var(--border)',
                     borderRadius: '1rem',
                     display: 'flex',

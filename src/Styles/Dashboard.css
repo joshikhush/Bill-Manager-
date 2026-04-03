@@ -44,7 +44,7 @@ body {
 }
 
 .sidebar {
-  width: 240px;
+  width: 200px;
   background-color: #1e293b;
   color: white;
   padding: 2.5rem 1.25rem;
@@ -62,12 +62,14 @@ body {
 
 .main-content {
   flex-grow: 1;
-  margin-left: 240px;
+  margin-left: 232px;
   padding: 2.5rem;
   min-width: 0;
   box-sizing: border-box;
-  width: calc(100% - 240px);
+  width: calc(100% - 232px);
 }
+
+
 
 
 .sidebar-logo {
@@ -119,8 +121,14 @@ body {
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 180px;
+  box-sizing: border-box;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 .card:hover {
   transform: translateY(-2px);
@@ -268,6 +276,21 @@ tr:hover {
   opacity: 0.6;
 }
 
+/* Hide number input arrows for clean UI and Dark Mode fix */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* For Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+
+
 
 /* Charts */
 .chart-container {
@@ -278,5 +301,20 @@ tr:hover {
 .dashboard-container {
   transition: background-color 0.4s ease;
 }
+
+/* Recharts Tooltip Dark Mode Fix */
+.recharts-default-tooltip {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-main) !important;
+  border-radius: 0.75rem !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.recharts-tooltip-label {
+  color: var(--text-main) !important;
+  font-weight: 600 !important;
+}
+
 
 

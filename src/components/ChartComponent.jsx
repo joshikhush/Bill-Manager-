@@ -45,32 +45,34 @@ const ChartComponent = () => {
             <stop offset="100%" stopColor="var(--primary)" stopOpacity={0.6} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+        <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
         <XAxis 
           dataKey="date" 
           axisLine={false} 
           tickLine={false} 
-          tick={{ fill: '#64748b', fontSize: 11, fontWeight: 500 }}
+          tick={{ fill: 'var(--text-muted)', fontSize: 11, fontWeight: 500 }}
           dy={10}
         />
         <YAxis 
           axisLine={false} 
           tickLine={false} 
-          tick={{ fill: '#64748b', fontSize: 11 }}
+          tick={{ fill: 'var(--text-muted)', fontSize: 11 }}
           tickFormatter={(value) => `₹${value}`}
         />
         <Tooltip 
-          cursor={{ fill: '#f1f5f9' }}
+          cursor={{ fill: 'var(--bg-main)' }}
           contentStyle={{ 
             borderRadius: '0.75rem', 
             border: 'none', 
             boxShadow: 'var(--shadow)',
-            padding: '0.75rem 1rem'
+            padding: '0.75rem 1rem',
+            backgroundColor: 'var(--bg-card)'
           }}
           itemStyle={{ color: 'var(--primary)', fontWeight: 700 }}
           labelStyle={{ marginBottom: '0.25rem', fontWeight: 600, color: 'var(--text-main)' }}
           formatter={(value) => [`₹${value.toLocaleString()}`, 'Amount']}
         />
+
         <Bar 
           dataKey="amount" 
           radius={[5, 5, 0, 0]} 

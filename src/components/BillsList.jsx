@@ -48,13 +48,11 @@ const BillsList = () => {
               <th>Category</th>
               <th>Amount</th>
               <th>Date</th>
-              <th>Status</th>
               {isAdmin && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
             {filteredBills.length > 0 ? filteredBills.map((bill) => {
-              const isHighlighted = highlightedBills.includes(bill.id);
               return (
                 <tr key={bill.id}>
                   <td style={{ color: 'var(--text-muted)', fontWeight: 500 }}>#{bill.id}</td>
@@ -66,13 +64,6 @@ const BillsList = () => {
                   </td>
                   <td style={{ fontWeight: 700, fontSize: '1rem' }}>₹{bill.amount.toLocaleString()}</td>
                   <td style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>{bill.date}</td>
-                  <td>
-                    {isHighlighted ? (
-                      <span className="badge badge-success">Highlighted</span>
-                    ) : (
-                      <span className="badge badge-neutral">Standard</span>
-                    )}
-                  </td>
                   {isAdmin && (
                     <td>
                       <button
@@ -88,13 +79,14 @@ const BillsList = () => {
               );
             }) : (
               <tr>
-                <td colSpan={isAdmin ? 7 : 6} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
+                <td colSpan={isAdmin ? 6 : 5} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
                   No bills found matching your search.
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+
       </div>
     </div>
   );
